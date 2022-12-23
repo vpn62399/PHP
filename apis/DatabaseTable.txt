@@ -1,0 +1,292 @@
+path = %path%;C:\Users\mvk_sun\Desktop\X-Down\git239\bin
+C:\Users\mvk_sun\Desktop\X-Down\mysql-8.0.27-winx64\mysql-8.0.27-winx64\bin\mysql.exe
+C:\PHP
+path = %path%;C:\Users\mvk_sun\Desktop\X-Down\git\bin
+
+
+プロジェクトの目的
+検証部材、WEB上で管理リスト、追加、削除、コメント、機能を実現する、拡張機能など
+
+開発言語など
+サーバー側 PHP,Mysql,JSON
+クラアン側 Javascript、Ajax、HTML、CSS、JSON
+
+開始日 2022/07/25
+完成日 ----------
+
+データ－ベースの構造
+partslist.database
+create database partslist;
+
+    #メインテーブル
+    MainList.table
+        indexkey		自動、メインキー
+        indate			日付(入庫日)
+        inperson        入れ担当者  サブテープル
+        upstream		在庫から(非在庫から) 1在庫、2簿外、3メーカーサンブル、4その他   サブテーブル
+        status			状態、1通常、2故障、3廃棄   サブテーブル
+        outdate			廃棄などの日付,
+        outperson       削除などの担当者    サブテープル
+        category        カテゴリ、MB,CPU,VGAなど    サブテーブル
+        pmodel			製品型番 サ ブテーブル
+        modexsn 		シリアル番号 Or LocalSN
+        COMMENT			コマンド 文字
+
+        create table partslist.mainlist(
+            indexkey int AUTO_INCREMENT PRIMARY KEY comment 'IndexKEY',
+            INDEX(indexkey),
+            indate date NOT NULL comment '登録日付',
+            inperson TINYINT NOT NULL comment '担当者 indexkey   users.table',
+            upstream TINYINT NOT NULL comment '仕入れ先 indexkey upstream.table',
+            status TINYINT NOT NULL comment '状態 indexkey  status.table',
+            outdate date comment '登録日付',
+            outperson TINYINT comment '担当者 indexkey  users.table',
+            category TINYINT NOT NULL comment '製品カテゴリ indexkey  category.table',
+            pmodel int NOT NULL comment '製品モデル indexkey  pmodel.table',
+            modexsn VARCHAR(20) UNIQUE comment 'シリアル番号',
+            comment VARCHAR(500) comment 'コメント文字数250',
+            killl TINYINT(1) NULL comment '殺す',
+            acount int comment 'アクセスの回数を記録する'
+        );
+
+        例
+        insert into partslist.mainlist(indate,inperson,upstream,status,category,pmodel,modexsn,comment,killl) values('2022/12/08',1,1,1,1,128,'N7M0CS00D664VKD','comment',1);
+
+
+
+
+
+    # 仕入れ先のサブテーブル
+    upstream.table
+        indexkey
+        item
+    
+        create table partslist.upstream(
+            indexkey int AUTO_INCREMENT PRIMARY KEY comment 'IndexKEY',
+            INDEX(indexkey),
+            item VARCHAR(20) UNIQUE NOT NULL comment '仕入れ先名',   ## 在庫、簿外、メーカーサンプル、購入など追加
+            killl TINYINT(1) NULL comment '殺す'
+        );
+
+
+    例
+    insert into partslist.upstream(item,killl) values("在庫",1);
+    insert into partslist.upstream(item,killl) values("簿外",1);
+    insert into partslist.upstream(item,killl) values("メーカーサンプル",1);
+    insert into partslist.upstream(item,killl) values("購入",1);
+
+
+    # 状態
+    status.table
+        indexkey
+        item
+
+        create table partslist.status(
+            indexkey int AUTO_INCREMENT PRIMARY KEY comment 'IndexKEY',
+            INDEX(indexkey),
+            item VARCHAR(20) UNIQUE NOT NULL comment '状態',   ## 完品、故障、廃棄などを追加
+            killl TINYINT(1) NULL comment '殺す'
+        );
+
+    insert into partslist.status(item,killl)values("完品",1);
+    insert into partslist.status(item,killl)values("故障",1);
+    insert into partslist.status(item,killl)values("廃棄",1);
+
+
+    # 製品のカテゴリ
+    category.table
+        indexkey
+        item
+
+        create table partslist.category(
+            indexkey int AUTO_INCREMENT PRIMARY KEY comment 'IndexKEY',
+            INDEX(indexkey),
+            item1 VARCHAR(20) UNIQUE NOT NULL comment 'カテゴリ',   ## マザーボード、VGA、メモリ、デバイスなどを追加
+            item2 VARCHAR(20) UNIQUE NOT NULL comment 'カテゴリ',   ## マザーボード、VGA、メモリ、デバイスなどを追加
+            killl TINYINT(1) NULL comment '殺す'
+        );
+
+
+    insert into partslist.category(item1,item2,killl)values("MB","マザーボード","1");
+    insert into partslist.category(item1,item2,killl)values("VGA","グラフィックカード","1");
+    insert into partslist.category(item1,item2,killl)values("CPU","マイクロプロセッサ","1");
+    insert into partslist.category(item1,item2,killl)values("CPUFAN","マイクロプロセッサファン","1");
+    insert into partslist.category(item1,item2,killl)values("CASEFAN","ケースファン","1");
+    insert into partslist.category(item1,item2,killl)values("PCCASE","パソコンケース","1");
+
+
+
+    # 製品のモデル
+    pmodel.table
+        indexkey
+        item
+        jan
+        makey 
+
+        create table partslist.pmodel(
+            indexkey int AUTO_INCREMENT PRIMARY KEY comment 'IndexKEY',
+            INDEX(indexkey),
+            item VARCHAR(50) UNIQUE NOT NULL comment '型番',
+            jan VARCHAR(20) UNIQUE NOT NULL comment 'ジャンコード',
+            maker TINYINT NOT NULL comment 'メーカー indexkey   maker.table',
+            killl TINYINT(1) NULL comment '殺す'
+        );
+
+        例
+        insert into partslist.pmodel(item,jan,maker)values("ASU-P8H67-MEVO/REV3.0","4562146253802",1);
+        insert into partslist.pmodel(item,jan,maker)values("ASU-P8H67-MLE/REV3.0","4562146253789",1);
+        insert into partslist.pmodel(item,jan,maker)values("ASU-P8H67-MPRO/REV3.0","4562146253819",1);
+        insert into partslist.pmodel(item,jan,maker)values("ASU-P8H67-V","4562146252744",1);
+        insert into partslist.pmodel(item,jan,maker)values("ASU-P8H67-V/REV3.0","4562146253826",1);
+        insert into partslist.pmodel(jan,item,maker)values("ASU-P8H67-MEVO/REV3.0","4562146253802",1);
+
+        update partslist.pmodel set item=:item,jan=:jan,make=:make,killl=:killl where indexkey=:key;
+
+
+        
+
+    # メーカー
+    maker.table
+        indexkey
+        item
+        Country
+
+        create table partslist.maker(
+            indexkey int AUTO_INCREMENT PRIMARY KEY comment 'IndexKEY',
+            INDEX(indexkey),
+            item VARCHAR(20) UNIQUE NOT NULL comment 'メーカー名',   ## ASUS,MSI,BIOSTARなどを追加
+            Country VARCHAR(20) comment '国名',  ## 国
+            killl TINYINT(1) NULL comment '殺す'
+        );
+
+        insert into partslist.maker(item,Country,killl)values("ASUS","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("MSI","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("BIOSTAR","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("CoolerMaster","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("PowerColor","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("INWin","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("NZXT","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("DeepCool","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("Plextor","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("Team","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("GAMDIAS","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("LR-LINK","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("UMAX","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("GEIL","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("FSP","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("darkFlash","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("RAZER","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("SPARKLE","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("G.SKILL","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("ProjectM","Taiwan",1);
+        insert into partslist.maker(item,Country,killl)values("Aiuto","Taiwan",1);
+        
+
+    # Janなし製品のため、ローカル作成しておく,リンクしていない
+    localjan.table
+        indexkey
+        jan
+        pmodel
+        create table testpart.localjan(
+        
+        )
+
+    # 担当者
+    user.table
+        indexkey
+        phpsession
+        item
+        level
+        group
+
+        create table partslist.user(
+            indexkey int AUTO_INCREMENT PRIMARY KEY comment 'IndexKEY',
+            INDEX(indexkey),
+            count SMALLINT comment '利用回数カウンター',
+            phpsession VARCHAR(50) comment 'phpセッションID',
+            item VARCHAR(20) NOT NULL comment '氏名',
+            level VARCHAR(2) NOT NULL comment 'レベル、A,B,C,D,Eなど',
+            ugp VARCHAR(2) NOT NULL comment 'グループID',
+            killl TINYINT(1) NULL comment '殺す'
+        );
+
+        insert into partslist.user(item,level,ugp,killl) values('千葉花子',1,1,1);
+        insert into partslist.user(item,level,ugp) values('東京恭子',1,1);
+        insert into partslist.user(item,level,ugp) values('神奈川聖子',1,1);
+        insert into partslist.user(item,level,ugp,phpsession) values('abc',1,1,'924149t426m94gvn06kjqe9rog');
+
+
+
+PHP API 構成
+    1. 検索API、検証品のリスト検索、動作検証結果の検索
+       search.php
+       
+    2. データベースの追加、更新 API
+    3. 管理API ユーザー登録、など
+    4. 
+
+
+
+目標の進捗
+2022/07/25  データ－ベースの構造の設定
+2022/07/26  データ－ベースの構造の設定
+2022/07/27  データ－ベースの構造の設定
+2020/07/28  Mysql データーペース作成コマンドの確認 Create dataTypeなど
+2020/07/29  Mysql データーペース作成コマンドの確認 Create dataTypeなど 
+            show full columns from mainlist 忘れそう!！
+2020/08/02  データ－ベースの構造の設定
+2020/08/03  データ－ベースの構造の設定
+2022/08/05  ajax 動作確認
+2022/08/09  ajax 操作確認 fetch async function await
+2022/08/09  javascript 要素の追加など
+2022/08/12  javascript 要素の追加など
+2022/08/17  JSON PHPエンコード Javascript デコード
+2022/08/17  データベース kill 項目を追加
+2022/08/19  async await Function 動作確認
+2022/08/23  Promise 動作確認
+2022/08/24  fetch post 動作確認
+2022/08/25  Document.querySelectorAll FormData  関数確認, API 
+            API (入力、確認、追加、アクセスログなど)
+2022/08/26  server.php Mysql アクセスAPI
+2022/08/30  アロー関数式
+2022/09/08  PHPAPIのプログラム作成Server.php
+2022/09/09  PHPAPIのプログラム作成Server.php,
+2022/09/15  =LAMBDA(b,VLOOKUP(b,Sheet1!A:H,1,1))(A4)  Excel の良い関数
+2022/09/29  再開 public function addModel($item)
+2022/10/04  ページ構造
+2022/10/05  login  html     -> 進行中 login 完了後に toppg.html に移動(遷移)
+2022/10/06  toppg  html     -> インデックスページ
+            plist  html     -> パーツのリスト
+2022/10/20  getusersessionid() ファンクションを追加、セッションIDを
+2022/10/24  CSS レイアウト 確認 default layout
+2022/10/26  CSS レイアウト Display Gird 
+2022/10/27  CSS レイアウト Display Gird 
+2022/10/28  CSS レイアウト Display Gird 
+2022/10/31  HTML FormData 項目追加用 Form 確認
+2022/11/01  additem.html 
+2022/11/02  additem.html javascript + PHPカテゴリの取得
+2022/11/04  select option のノートの追加確認
+2022/11/07  select option のノートの追加 (追加の画面)
+2022/11/08  select option のノートの追加 (追加の画面),Javascript クラス確認
+2022/11/09  findpmodel.php モデルのシリアル番号による検索 を追加中
+2022/11/14  JAN一部追加
+2022/11/16  JAN一部追加
+2022/11/17  additem.php API ファイルの追加 additem.js upadditem() 追加途中
+2022/11/21  additem.php API jan_existsファンクション作成
+2022/11/22  additem.php API updatePmodel() ファンクション作成中
+2022/11/29  additem.php API updatePmodel() ファンクション作成中
+2022/11/30  additem.php API findSnEXIST() ファンクション作成中 ☓
+2022/12/01  findmain.php 作成中
+2022/12/02  additem.js serialnumberck calss 追加 findmain.php 
+2022/12/05  APISReadme.php  ファイルを追加 API Readme.txt
+2022/12/08  addnewitem()  既存更新機能できた。 ★★★
+2022/12/08  MainList.table pmodel intタイプに変更、(PmodelはIntのため)
+2022/12/09  addnewitem()  新規追加機能できた。 ★★★
+2022/12/13  Mainlist.mainlist  modexsn  varchar(30) に20から変更
+2022/12/13  menu.js を追加、各ページサイトバーを設定する。作成中です。
+2022/12/13  menu.js 作成中 途中
+2022/12/19  plist.html 追加、ここに全てのパーツの表示と検索機能する。
+2022/12/20  plist.html レイアウトデザイン
+2022/12/20  plist.js 追加 
+2022/12/21  Mysql Join 検索方法
+2022/12/22  Git 設定 パスワード認証失敗

@@ -1,0 +1,114 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja" class="">
+
+<head>
+    <title>loginpage.html</title>
+    <meta http-equiv="content-language" content="ja" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="content-style-type" content="text/css" />
+    <meta http-equiv="content-script-type" content="text/javascript" />
+    <meta name="viewport" content="width=device-width,maximum-scale=1" />
+    <meta name="keywords"
+        content="PCパーツ,周辺機器,ASUS,ASUSTeK,LEADTEK,BIOSTAR.GALAXY,LG,PerterPower,マザーボード,VGA,グラフィックカード,ドライブ,マルチメディア,自作,秋葉原，製品情報，サポート，FAQ,新製品RSS," />
+    <meta name="description" content="自作用各種PC用パーツをお取り扱いするwebサイトです" />
+</head>
+
+<body>
+    <div id="mdiv">
+        <div>
+            <form action="Send">
+                <div>
+                    <lable>
+                        ネックネーム
+                        <input type="text" name="name">
+                    </lable>
+                </div>
+                <div>
+                    <label>
+                        パスワード
+                        <input type="password" name="password">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        送信
+                        <button type="button">送信</button>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+
+    let phpsid;
+    for (temp of document.cookie.split(';')) {
+        let temp2 = temp.split('=');
+        if (temp2[0] == 'PHPSESSID') {
+            phpsid = temp2[1];
+        }
+    }
+
+    async function ck(phpsessionid) {
+        let url = 'apis/user.php';
+        let ckd = new FormData();
+        ckd.append('PHPCKID', phpsid);
+        ckd.append('method', 'userlogin');
+        console.log('debug---', phpsessionid);
+        for (v of ckd) {
+            console.log('debug---', v);
+        }
+        try {
+            await fetch(url, {
+                method: 'POST',
+                body: ckd
+            })
+                .then(response => {
+                    return response.text();
+                })
+                .then(vvv => {
+                    console.log(vvv)
+                })
+        } catch (error) {
+            console.log(error);
+        } finally {
+            console.log('debug--', 'end');
+        }
+    }
+    ck(phpsid);
+
+    function userin() {
+        const but = document.querySelector('button');
+        const fd = document.querySelector('form');
+        but.addEventListener("click", function () {
+            let fdd = new FormData(fd);
+            fdd.append('phpsid', phpsid);
+
+            for (let temp of fdd.entries()) {
+                console.log(temp);
+            }
+
+            fdd.forEach((val, key) => {
+                console.log(key, val)
+            });
+
+            fetch('apis/user.php', {
+                method: 'POST',
+                body: fdd
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    console.log(document.cookie);
+                    alert("stop");
+                    window.location.href = 'toppg.html';
+                });
+        });
+    }
+
+    // userin();
+
+
+</script>
+
+</html>

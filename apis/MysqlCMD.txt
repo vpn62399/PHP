@@ -1,0 +1,28 @@
+mysql> help show;
+
+
+カラム情報
+mysql> show columns from partslist.user;    カラムに関する情報を取得する
+mysql> show full columns from partslist.user;
+
+カラム
+カラム修正
+mysql> alter table mainlist modify modexsn varchar(30);  ガラム方の変更方法
+ガラム追加
+mysql> alter table mainlist add acount int comment "アクセスの回数を記録する"
+
+行削除
+mysql> delete from mainlist where indexkey = 7; 行削除
+
+
+
+
+検索方法
+Joinの使い方
+mysql> select * from mainlist join pmodel on mainlist.pmodel=pmodel.indexkey;
+join 複数
+mysql> select * from mainlist join pmodel on mainlist.pmodel=pmodel.indexkey join maker on pmodel.maker=maker.indexkey;
+条件
+mysql> select * from mainlist join pmodel on mainlist.pmodel=pmodel.indexkey join maker on pmodel.maker=maker.indexkey where mainlist.modexsn="N7M0CS00D664VKD";
+条件
+mysql> select * from mainlist join pmodel on mainlist.pmodel=pmodel.indexkey join maker on pmodel.maker=maker.indexkey where maker.item="ASUS";
