@@ -2,6 +2,7 @@ path = %path%;C:\Users\mvk_sun\Desktop\X-Down\git239\bin
 C:\Users\mvk_sun\Desktop\X-Down\mysql-8.0.27-winx64\mysql-8.0.27-winx64\bin\mysql.exe
 C:\PHP
 path = %path%;C:\Users\mvk_sun\Desktop\X-Down\git\bin
+git url https://github.com/vpn62399/PHP.git
 
 
 プロジェクトの目的
