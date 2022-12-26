@@ -291,3 +291,10 @@ PHP API 構成
 2022/12/20  plist.js 追加 
 2022/12/21  Mysql Join 検索方法
 2022/12/22  Git 設定 パスワード認証失敗
+2022/12/23  git 保存成功 https://github.com/vpn62399/PHP
+
+
+
+
+
+path = %path%;C:\Users\mvk_sun\Desktop\X-Down\git239\bin
