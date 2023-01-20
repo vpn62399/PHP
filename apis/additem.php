@@ -16,6 +16,9 @@ if (1) {
 
 class additem extends mainacc
 {
+    public $pmodeIndexkey = null;
+    public $mainlistIndexkey = null;
+
     function __construct()
     {
         parent::__construct();
