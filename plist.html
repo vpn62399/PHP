@@ -44,23 +44,33 @@
             </div>
             <div id="layout_center">
                 <!-- 中央エリア -->
-                <div id=plist_SearchBar>layout_center</div>
-                <div id=plist_showTable>
-                    <table id="plist_showTables" border="1" width="80%">
-                        <tr>
-                            <th>JAN</th>
-                            <th>モデル名</th>
-                            <th>コメント</th>
-                            <th>詳細</th>
-                        </tr>
-                        <tr>
-                            <td>aaa</td>
-                            <td>mmmm</td>
-                            <td>comment</td>
-                            <td>詳細</td>
-                        </tr>
-                    </table>
-                </div>
+                <form id="search_OPTFORM">
+                    <div>
+                        <label class="notename">Model</label>
+                        <input type="text" name="model">
+                    </div>
+                    <div>
+                        <label class="notename">Maker</label>
+                        <input typt="text" name="maker" list="makerlist">
+                        <datalist id="makerlist">
+                            <option value="ASUS"></option>
+                            <option value="BIOSTAR"></option>
+                        </datalist>
+                    </div>
+                    <div>
+                        <lable class="notename">Serial</lable>
+                        <input type="text" name="Serial">
+                    </div>
+                    <div>
+                        <button id="search_but" type="button">検索</button>
+                    </div>
+                    </from>
+                    <div id=plist_SearchBar>layout_center</div>
+                    <div id=plist_showTable>
+                        <table id="plist_showTables" border="1" width="80%">
+
+                        </table>
+                    </div>
             </div>
             <div class="layout_right">
                 <!-- 右バーエリア -->
