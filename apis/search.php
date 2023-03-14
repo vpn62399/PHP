@@ -23,10 +23,11 @@ class search extends mainacc
         // $this->sqlcmd = 'select * from mainlist join pmodel on mainlist.pmodel=pmodel.indexkey join maker on pmodel.maker=maker.indexkey where pmodel.item like '%%' and mainlist.modexsn like '%%' and maker.item like '%%'';
         // $sqlarray = array('pmodel' => $_POST['pmodel'], 'maker' => $_POST['maker'], 'indexkey' => $this->pmodeIndexkey);
         // $this->sqlcmd = 'select * from mainlist join pmodel on mainlist.pmodel=pmodel.indexkey join maker on pmodel.maker=maker.indexkey where pmodel.item like :model and mainlist.modexsn like :Serial and maker.item like :maker';
-        $this->sqlcmd = 'select mainlist.indate,pmodel.item,pmodel.jan AS jan,mainlist.modexsn,mainlist.comment,user.item AS user from mainlist 
+        $this->sqlcmd = 'select mainlist.indate,pmodel.item,pmodel.jan AS jan,mainlist.modexsn,mainlist.comment,user.item AS user,category.item1 AS category  from mainlist 
                         join pmodel on pmodel.indexkey =mainlist.pmodel
                         join maker on maker.indexkey =pmodel.maker
                         join user on user.indexkey = mainlist.inperson
+                        join category on category.indexkey = mainlist.category
                         where pmodel.item like :model 
                         and mainlist.modexsn like :Serial 
                         and maker.item like :maker';

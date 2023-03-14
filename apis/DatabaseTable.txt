@@ -304,6 +304,7 @@ PHP API 構成
 2023-03-02 17:03:13 plist.js 検索オプションURL作成、FormDate使用
 2023-03-03 13:18:57 plist.js SQLコマンド、一つにした。Likeの利用
 2023-03-08 13:16:35 Document DOM 操作、追加、クロン、
+2023-03-09 16:06:47 plist の検索機能は機能する
 
 
 
@@ -311,6 +312,5 @@ PHP API 構成
 
 
 http://aut-sun2:88/plist.html
-
 
 path = %path%;C:\Users\mvk_sun\Desktop\X-Down\git239\bin

@@ -40,7 +40,7 @@ class plist {
         // 自動テーブルの作成,可用
         // 表示項目指定
         // 2023-03-09 15:30:59
-        let showtr = ['indate', 'jan', 'item', 'modexsn', 'comment', 'user'];
+        let showtr = ['indate', 'jan', 'category', 'item', 'modexsn', 'comment', 'user'];
         let ttable = document.getElementById('plist_showTables')
         if (ttable.firstElementChild) {
             ttable.removeChild(ttable.firstElementChild)
