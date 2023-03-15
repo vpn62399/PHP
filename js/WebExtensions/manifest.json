@@ -1,0 +1,45 @@
+{
+	"name": "checkout",
+	"version": "1.0.0",
+	"description": " Timecard Tools",
+	"manifest_version": 3,
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"action": {
+		"default_icon": "icon_16.png",
+		"default_popup": "default_popup.html"
+	},
+	"icons": {
+		"19": "GB-19.png",
+		"48": "GB-48.png",
+		"128": "GB-128.png"
+	},
+	"permissions": [
+		"bookmarks",
+		"scripting",
+		"activeTab",
+		"tabs",
+		"idle",
+		"cookies",
+		"system.cpu",
+		"system.memory",
+		"system.storage",
+		"downloads",
+		"storage"
+	],
+	"host_permissions": [
+		"https://*/*"
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*/*"
+			],
+			"js": [
+				"insert_js.js"
+			]
+		}
+	]
+}
