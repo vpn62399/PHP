@@ -125,7 +125,8 @@ select {
 #plist_showTables {
     border-collapse: collapse;
     font-size: 12px;
-    text-align: left;
+    text-align: justify;
+    /* white-space: nowrap; */
 }
 
 #plist_showTables>tbody {
