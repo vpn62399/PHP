@@ -204,17 +204,39 @@ create database partslist;
             indexkey int AUTO_INCREMENT PRIMARY KEY comment 'IndexKEY',
             INDEX(indexkey),
             count SMALLINT comment '利用回数カウンター',
-            phpsession VARCHAR(50) comment 'phpセッションID',
+            phpsession VARCHAR(100) comment 'phpセッションID',
             item VARCHAR(20) NOT NULL comment '氏名',
-            level VARCHAR(2) NOT NULL comment 'レベル、A,B,C,D,Eなど',
-            ugp VARCHAR(2) NOT NULL comment 'グループID',
+            level TINYINT(1) NOT NULL comment 'レベル、A,B,C,D,Eなど',
+            ugp TINYINT(1) NOT NULL comment 'グループID',
+            pass VARCHAR(20) NOT NULL comment '明示パスワード',
+            pass_HASH VARCHAR(100) comment 'パスワードのハッシュ',
             killl TINYINT(1) NULL comment '殺す'
         );
 
-        insert into partslist.user(item,level,ugp,killl) values('千葉花子',1,1,1);
-        insert into partslist.user(item,level,ugp) values('東京恭子',1,1);
-        insert into partslist.user(item,level,ugp) values('神奈川聖子',1,1);
-        insert into partslist.user(item,level,ugp,phpsession) values('abc',1,1,'924149t426m94gvn06kjqe9rog');
+        insert into partslist.user(item,level,ugp,pass,killl) values('千葉花子',1,1,'12345',1);
+        insert into partslist.user(item,level,ugp,pass,killl) values('東京恭子',1,1,'12345',1);
+        insert into partslist.user(item,level,ugp,pass,killl) values('神奈川聖子',1,1,'12345',1);
+        insert into partslist.user(item,level,ugp,pass,killl) values('神田明神',1,1,'12345',1);
+
+
+    menus.table
+        drop table partslist.menus;
+
+        create table partslist.menus(
+            indexkey int AUTO_INCREMENT PRIMARY KEY comment 'indexKEY',
+            INDEX(indexkey),
+            morder TINYINT(1) NOT NULL comment '並び替え',
+            enmenu VARCHAR(20) NOT NULL comment '英文メニュー',
+            jpmenu VARCHAR(20) NOT NULL comment '和文メニュー',
+            url VARCHAR(20) NOT NULL comment 'URL',
+            killl TINYINT(1) NULL comment '殺す'
+        );
+        
+
+        insert into partslist.menus(morder,enmenu,jpmenu,url,killl)values(1,'List','検証部材のリスト','plist.html',1);
+        insert into partslist.menus(morder,enmenu,jpmenu,url,killl)values(1,'Add','検証部材の追加','additem.html',1);
+        insert into partslist.menus(morder,enmenu,jpmenu,url,killl)values(1,'login','ログアウト','login.html',1);
+        
 
 
 
@@ -308,11 +330,14 @@ PHP API 構成
 2023-03-15 16:25:36 WebExtensions 機能の検証、指定時間内で動作可
 2023-03-23 13:40:34 plist.html 表示のレイアウトデザイン
 2023-03-24 16:20:28 plist.html メーカーリストの追加(検索)
+2023-03-27 13:20:14 plist.html th のノートの追加, 検索オプション dblclick 追加
+2023-03-28 13:49:02 login.html 見直す 
+2023-03-29 13:14:55 menu.js 見直し メニュー項目をデータ-ベースに保存 （可動）
 
 
-
-
-
+https://tm.minagine.net/index.html
+class = btn
+onclick="return doOpenIdAuth(this.form);
 
 http://aut-sun2:88/plist.html
 

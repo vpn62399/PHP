@@ -40,18 +40,32 @@ class plist {
         // 自動テーブルの作成,可用
         // 表示項目指定
         // 2023-03-09 15:30:59
-        let showtr = ['mindexkey', 'indate', 'jan', 'category', 'item', 'modexsn', 'comment', 'user'];
+        let showtr = {
+            'mindexkey': '索引', 'indate': '入荷日', 'jan': 'JANコード', 'category': 'カテゴリー', 'item': 'アイテム',
+            'modexsn': 'シリアル番号', 'comment': 'コメント', 'user': '管理者'
+        };
         let ttable = document.getElementById('plist_showTables')
         if (ttable.firstElementChild) {
             ttable.removeChild(ttable.firstElementChild)
         }
         let tbody = document.createElement('tbody');
         ttable.appendChild(tbody);
+
+        let ctr = document.createElement('tr')
+        let cth = document.createElement('th');
+        for (let t in showtr) {
+            console.log(showtr[t]);
+            cth = document.createElement('th');
+            cth.innerText = showtr[t];
+            ctr.appendChild(cth);
+        }
+        tbody.appendChild(ctr);
+
         for (let t of showJson[1]) {
             let ctr = document.createElement('tr');
             let ctd = document.createElement('td');
             console.log(t);
-            for (let j of showtr) {
+            for (let j in showtr) {
                 ctd = document.createElement('td');
                 ctd.style.padding = '5px';
                 if (j !== 'comment') {
@@ -112,9 +126,24 @@ function callback2(req) {
     }
 }
 
+// 2023-03-27 13:37:40
+// dblclickして入力した値をクリアにする
+function dd() {
+    let vvv = document.getElementsByName('maker')[0];
+    vvv.addEventListener('dblclick', function () {
+        this.value = '';
+    })
+
+    vvv.addEventListener('mousemove', function () {
+        
+    })
+
+}
+
 window.addEventListener('load', function () {
     let but = document.getElementById('search_but');
     setmeopt();
+    dd();
     but.addEventListener('click', function () {
         let sh = new plist();
         sh.getsearch('all', sh.showTable);

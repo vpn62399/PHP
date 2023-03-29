@@ -227,6 +227,21 @@ class mainacc
     {
     }
 
+    // 2023-03-29 15:05:20 ページメニュー項目の設定
+    public function pemenu()
+    {
+        try {
+            $temp = array("killl" => 1);
+            $sql = 'select * from partslist.menus where killl =:killl order by morder';
+            $this->accsee();
+            $pr = $this->dbh->prepare($sql);
+            $pr->execute($temp);
+            echo json_encode($pr->fetchAll(), JSON_UNESCAPED_UNICODE);
+        } catch (PDOException $e) {
+            $this->printError($e);
+        }
+    }
+
     public function printError($e)
     {
         echo '<pre>';

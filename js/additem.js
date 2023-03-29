@@ -6,7 +6,7 @@
 
 class setopt {
     debugflg = 1;
-    debugtext = "---------additem.js-------------"
+    debugtext = "---------additem.js-------------";
     apiurl = './apis/getopt.php?';
 
     async getopt(opt, callback) {

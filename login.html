@@ -33,6 +33,13 @@
                         送信
                         <button type="button">送信</button>
                     </label>
+                    <label>
+                        新規登録
+                        <input type="checkbox" name="ckb">
+                    </label>
+                    <label>
+
+                    </label>
                 </div>
             </form>
         </div>
@@ -41,6 +48,7 @@
 </body>
 <script type="text/javascript">
 
+    // cookie セッション確認
     let phpsid;
     for (temp of document.cookie.split(';')) {
         let temp2 = temp.split('=');
@@ -49,6 +57,7 @@
         }
     }
 
+    // セッションチェック
     async function ck(phpsessionid) {
         let url = 'apis/user.php';
         let ckd = new FormData();
@@ -77,6 +86,7 @@
     }
     ck(phpsid);
 
+    // ユーザーログイン
     function userin() {
         const but = document.querySelector('button');
         const fd = document.querySelector('form');
@@ -100,13 +110,23 @@
                 .then(data => {
                     console.log(data);
                     console.log(document.cookie);
-                    alert("stop");
-                    window.location.href = 'toppg.html';
+                    // alert("stop");
+                    // window.location.href = 'plist.html';
                 });
         });
     }
 
-    // userin();
+    // ユーザーログアウト
+    function userout() {
+
+    }
+
+    // ユーザー新規登録
+    function usersetup() {
+
+    }
+
+    userin();
 
 
 </script>
