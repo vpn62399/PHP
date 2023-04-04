@@ -75,14 +75,27 @@ class plist {
                     let cta = document.createElement('a');
                     // cta.href = 'http://www.google.co.jp';
                     cta.innerHTML = t[j];
-                    cta.addEventListener('click', function () {
-                        alert('2023-03-23 13:39:19');
-                    })
                     ctd.appendChild(cta);
+                    cta.addEventListener('click', function () {
+                        let qq = document.getElementsByClassName("clearcolor");
+                        for (v of qq) {
+                            v.style.backgroundColor = "";
+                        }
+                        this.parentElement.className = "clearcolor";
+                        this.parentElement.style.backgroundColor = "#1cd82d2e";
+                    }, true)
                 } else {
                     ctd.innerText = t[j];
                 }
                 ctr.appendChild(ctd);
+                ctr.addEventListener('click', function () {
+                    let qq = document.getElementsByClassName("clearcolor");
+                    for (v of qq) {
+                        v.style.backgroundColor = "";
+                    }
+                    this.className = "clearcolor";
+                    this.style.backgroundColor = "#1cd82d2e";
+                }, true)
             }
             ctr.appendChild(ctd);
             tbody.appendChild(ctr);
@@ -135,7 +148,7 @@ function dd() {
     })
 
     vvv.addEventListener('mousemove', function () {
-        
+
     })
 
 }
