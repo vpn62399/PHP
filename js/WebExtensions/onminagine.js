@@ -4,16 +4,39 @@
 // https://tm.minagine.net/
 
 
+// vvv = document.getElementsByTagName('tbody')[3].getElementsByTagName('tr')
+
+
 function rst(bt) {
     console.log(bt + ' click()');
-    if (document.getElementById(bt)) {
-        document.getElementById(bt).click();
-    } else {
+    if (!document.getElementById(bt)) {
         console.info(bt, 'click Error');
+        return;
     }
+
+    let ck = document.getElementsByTagName('tbody')[3].getElementsByTagName('tr')[0];
+    let axis = ck.firstElementChild.nextElementSibling.innerText;
+    // 勤務開始
+    // 勤務終了
+
+    if (axis == '勤務開始' && bt == 'button0') {
+        console.log(bt, ck.innerText);
+        return;
+    } else {
+        document.getElementById(bt).click();
+    }
+    if (axis == '勤務終了' && bt == 'button1') {
+        console.log(bt, ck.innerText);
+        return;
+    } else {
+        document.getElementById(bt).click();
+    }
+    document.getElementById(bt).click();
+    return;
 }
 
-function scr(h, m, s,bt) {
+
+function scr(h, m, s, bt) {
     const now = new Date();
     const scheduledTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, s);
     console.log(scheduledTime);

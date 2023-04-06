@@ -7,6 +7,8 @@ onload = (function () {
 	if (typeof scr === 'function') {
 		scr(8, 34, 55, 'button0');
 		scr(18, 1, 11, 'button1');
+		// scr(13, 15, 55, 'button0');
+		// scr(13, 16, 11, 'button1');
 	}
 	console.log('onload');
 })

@@ -335,6 +335,7 @@ PHP API 構成
 2023-03-29 13:14:55 menu.js 見直し メニュー項目をデータ-ベースに保存 （可動）
 2023-04-03 12:33:45 plist.html クリックを色をつける
 2023-04-04 13:08:15 plist.html クリックを色をつける
+2023-04-05 16:02:16 login.html CSS スタールデザイン
 
 https://tm.minagine.net/index.html
 class = btn
