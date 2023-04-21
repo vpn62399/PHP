@@ -136,7 +136,7 @@ select {
 
 
 /* login 画面 */
-body {
+#loginbody {
     display: grid;
 
     justify-content: space-evenly;

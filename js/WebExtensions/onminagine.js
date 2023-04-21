@@ -22,14 +22,10 @@ function rst(bt) {
     if (axis == '勤務開始' && bt == 'button0') {
         console.log(bt, ck.innerText);
         return;
-    } else {
-        document.getElementById(bt).click();
     }
     if (axis == '勤務終了' && bt == 'button1') {
         console.log(bt, ck.innerText);
         return;
-    } else {
-        document.getElementById(bt).click();
     }
     document.getElementById(bt).click();
     return;

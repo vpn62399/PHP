@@ -234,8 +234,9 @@ create database partslist;
         
 
         insert into partslist.menus(morder,enmenu,jpmenu,url,killl)values(1,'List','検証部材のリスト','plist.html',1);
-        insert into partslist.menus(morder,enmenu,jpmenu,url,killl)values(1,'Add','検証部材の追加','additem.html',1);
-        insert into partslist.menus(morder,enmenu,jpmenu,url,killl)values(1,'login','ログアウト','login.html',1);
+        insert into partslist.menus(morder,enmenu,jpmenu,url,killl)values(2,'Add','検証部材の追加','additem.html',1);
+        insert into partslist.menus(morder,enmenu,jpmenu,url,killl)values(3,'Add','出荷履歴','outhistory.html',1);
+        insert into partslist.menus(morder,enmenu,jpmenu,url,killl)values(100,'login','ログアウト','login.html',1);
         
 
 
@@ -336,6 +337,9 @@ PHP API 構成
 2023-04-03 12:33:45 plist.html クリックを色をつける
 2023-04-04 13:08:15 plist.html クリックを色をつける
 2023-04-05 16:02:16 login.html CSS スタールデザイン
+2023-04-06 13:45:46 login.html password_hash の確認、途中
+2023-04-07 13:22:42 login.js ログインオプション作成の途中、使用できない
+2023-04-10 17:59:05 login.js ログインオプション作成の途中、使用できない
 
 https://tm.minagine.net/index.html
 class = btn

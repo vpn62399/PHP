@@ -1,5 +1,6 @@
 <?php
-session_start();
+phpinfo();
+// session_start();
 
 // print(__FILE__);
 // echo '<br>';
