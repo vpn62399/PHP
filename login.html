@@ -17,11 +17,11 @@
 <body id="loginbody">
     <div>title</div>
     <div id="loginform">
-        <form id = "login_from" action="Send">
+        <form id="login_from" action="Send">
             <div>
                 <lable>
                     <div>ログインID</div>
-                    <input type="text" name="name">
+                    <input type="text" name="name" autocomplete="off">
                 </lable>
             </div>
             <div>
@@ -47,6 +47,17 @@
         </form>
     </div>
     <div>bottom</div>
+    <pre>
+ mysql> select * from user;
+ +----------+-------+------------+-------+------------+-------+-----+--------+--------------------------------------------------------------+-------+
+ | indexkey | count | phpsession | Ename | item       | level | ugp | pass   | pass_HASH                                                    | killl |
+ +----------+-------+------------+-------+------------+-------+-----+--------+--------------------------------------------------------------+-------+
+ |        1 |  NULL | NULL       | cbhn  | 千葉花子   |     1 |   1 | 123456 | $2y$10$DIxPgSsOgt0AGBTQ.EkPledo8SLK5V8bVnhbYDTT1Jdnfqhnbf7r2 |     1 |
+ |        2 |  NULL | NULL       | tkk   | 東京恭子   |     1 |   1 | 123456 | $2y$10$DIxPgSsOgt0AGBTQ.EkPledo8SLK5V8bVnhbYDTT1Jdnfqhnbf7r2 |     1 |
+ |        3 |  NULL | NULL       | knks  | 神奈川聖子 |     1 |   1 | 123456 | $2y$10$DIxPgSsOgt0AGBTQ.EkPledo8SLK5V8bVnhbYDTT1Jdnfqhnbf7r2 |     1 |
+ |        4 |  NULL | NULL       | kdmj  | 神田明神   |     1 |   1 | 123456 | $2y$10$DIxPgSsOgt0AGBTQ.EkPledo8SLK5V8bVnhbYDTT1Jdnfqhnbf7r2 |     1 |
+ +----------+-------+------------+-------+------------+-------+-----+--------+--------------------------------------------------------------+-------+
+    </pre>
 </body>
 
 </html>
