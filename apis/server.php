@@ -30,6 +30,9 @@ class mainacc
         $this->mysqluser = 'root';
         $this->mysqlpassword = 'toor';
         $this->mysqldb_name = 'mysql:dbname=partslist;host=localhost';
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function accsee()
@@ -231,12 +234,16 @@ class mainacc
     public function pemenu()
     {
         try {
-            $temp = array("killl" => 1);
-            $sql = 'select * from partslist.menus where killl =:killl order by morder';
-            $this->accsee();
-            $pr = $this->dbh->prepare($sql);
-            $pr->execute($temp);
-            echo json_encode($pr->fetchAll(), JSON_UNESCAPED_UNICODE);
+            if ($_SESSION['permissions'] == 'LoginOK') {
+                $temp = array("killl" => 1);
+                $sql = 'select * from partslist.menus where killl =:killl order by morder';
+                $this->accsee();
+                $pr = $this->dbh->prepare($sql);
+                $pr->execute($temp);
+                echo json_encode(array(array("loginName" => $_SESSION['loginName'], "loginStatus" => $_SESSION['loginStatus']), $pr->fetchAll()), JSON_UNESCAPED_UNICODE);
+            } else {
+                echo json_encode(array(array("loginName" => $_POST['name'], "loginStatus" => "passError"), array()), JSON_UNESCAPED_UNICODE);
+            }
         } catch (PDOException $e) {
             $this->printError($e);
         }

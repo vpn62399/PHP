@@ -34,9 +34,15 @@ window.addEventListener('load', function () {
     }
 
     function cb(data) {
+        // 2023-05-11 13:34:35 OK
         let v = new Sidebar(13);
-        for (i in data) {
-            v.bar1(data[i]['jpmenu'], data[i]['url']);
+        console.log(data);
+        if (data[0]['loginStatus'] !== 'LoginOK') {
+            window.location.replace("./login.html");
+            console.log(data);
+        }
+        for (i in data[1]) {
+            v.bar1(data[1][i]['jpmenu'], data[1][i]['url']);
         }
     }
     getmenu();

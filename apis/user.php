@@ -11,8 +11,8 @@
 ?>
 
 <?php
-session_start();
 include('./server.php');
+
 // 2023-04-11 13:33:20 途中
 // echo json_encode($_REQUEST, JSON_UNESCAPED_UNICODE);
 
@@ -44,15 +44,18 @@ class userapt extends mainacc
             $temp = $pr->fetchAll();
 
             if (count($temp) == 0) {
-                echo json_encode(array("loginStatus" => "Enameerror"), JSON_UNESCAPED_UNICODE);
+                echo json_encode(array("loginName" => $_POST['name'], "loginStatus" => "EnameError"), JSON_UNESCAPED_UNICODE);
                 return;
             }
             if (password_verify($_POST['password'],   $temp[0]['pass_HASH'])) {
                 // echo json_encode($temp[0], JSON_UNESCAPED_UNICODE);
-                echo json_encode(array("loginStatus" => "LoginOK"));
+                $_SESSION['permissions'] = 'LoginOK';
+                $_SESSION['loginName'] = $_POST['name'];
+                $_SESSION['loginStatus'] = 'LoginOK';
+                echo json_encode(array("loginName" => $_POST['name'], "loginStatus" => "LoginOK"));
                 return;
             } else {
-                echo json_encode(array("loginStatus" => "passerror"), JSON_UNESCAPED_UNICODE);
+                echo json_encode(array("loginName" => $_POST['name'], "loginStatus" => "passError"), JSON_UNESCAPED_UNICODE);
                 return;
             }
         } catch (PDOException $e) {
@@ -60,26 +63,20 @@ class userapt extends mainacc
         }
     }
 
-    public function test()
+    public function userloginout()
     {
-        $v = '123456';
-        $b = password_hash($v, PASSWORD_DEFAULT);
-        $c = password_hash($v, PASSWORD_DEFAULT);
-        echo $b;
-        echo '<br>';
-        echo $c;
-        echo '<br>';
-        echo password_verify('33123456', $c);
+        unset($_SESSION['permissions']);
+        unset($_SESSION['loginName']);
+        unset($_SESSION['loginStatus']);
     }
 }
 
-$ks = new userapt();
-$ks->userlgin();
-// $ks->test();
-
-
-
-
-
-
+if ($_GET['opt'] === 'loginout') {
+    $ks = new userapt();
+    $ks->userloginout();
+}
+if ($_GET['opt'] === 'login') {
+    $ks = new userapt();
+    $ks->userlgin();
+}
 ?>
