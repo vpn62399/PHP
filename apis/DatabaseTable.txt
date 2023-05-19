@@ -226,19 +226,21 @@ create database partslist;
         create table partslist.menus(
             indexkey int AUTO_INCREMENT PRIMARY KEY comment 'indexKEY',
             INDEX(indexkey),
-            morder TINYINT(1) NOT NULL comment '並び替え',
             enmenu VARCHAR(20) NOT NULL comment '英文メニュー',
             jpmenu VARCHAR(20) NOT NULL comment '和文メニュー',
             url VARCHAR(20) NOT NULL comment 'URL',
+            menugroup SMALLINT(1) NOT NULL comment 'メニューグループ',
+            menuorder TINYINT(1) NOT NULL comment '並び替え',
             acca TINYINT(1) NOT NULL comment 'access authority アクセス権限',
             killl TINYINT(1) NULL comment '殺す'
         );
         
 
-        insert into partslist.menus(morder,enmenu,jpmenu,url,acca,killl)values(1,'List','検証部材のリスト','plist.html',1,1);
-        insert into partslist.menus(morder,enmenu,jpmenu,url,acca,killl)values(2,'Add','検証部材の追加','additem.html',1,1);
-        insert into partslist.menus(morder,enmenu,jpmenu,url,acca,killl)values(3,'Add','出荷履歴','outhistory.html',1,1);
-        insert into partslist.menus(morder,enmenu,jpmenu,url,acca,killl)values(100,'login','ログアウト','login.html',1,1);
+        insert into partslist.menus(enmenu,jpmenu,url,menugroup,menuorder,acca,killl)values('List','検証部材のリスト','plist.html',100,1,1,1);
+        insert into partslist.menus(enmenu,jpmenu,url,menugroup,menuorder,acca,killl)values('Add','検証部材の追加','additem.html',100,1,1,1);
+        insert into partslist.menus(enmenu,jpmenu,url,menugroup,menuorder,acca,killl)values('Add','出荷履歴','outhistory.html',200,1,1,1);
+        insert into partslist.menus(enmenu,jpmenu,url,menugroup,menuorder,acca,killl)values('login','ログアウト','login.html',200,1,1,1);
+        select * from menus;
         
 
 
@@ -350,6 +352,7 @@ PHP API 構成
 2023-05-11 13:34:53 未登録検出利用可能
 2023-05-11 16:57:14 Login.js ログインアウトの機能追加中
 2023-05-12 13:18:30 loginout機能利用可能
+2023-05-19 16:30:30 メニュー調整、グループ追加
 
 
 

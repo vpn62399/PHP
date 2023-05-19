@@ -20,9 +20,9 @@ class Sidebar {
 }
 
 window.addEventListener('load', function () {
-    async function getmenu() {
+    async function getmenu(menugroup) {
         try {
-            let url = './apis/pagemenu.php'
+            let url = './apis/pagemenu.php?menugropu=' + menugroup;
             let m = await fetch(url);
             if (m.status == 200 && m.statusText == 'OK') {
                 let mm = await m.json();
@@ -45,5 +45,8 @@ window.addEventListener('load', function () {
             v.bar1(data[1][i]['jpmenu'], data[1][i]['url']);
         }
     }
-    getmenu();
+    // this.alert(menugroup);
+    getmenu(menugroup);
 })
+
+// alert(menugroup);

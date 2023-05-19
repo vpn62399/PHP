@@ -231,12 +231,13 @@ class mainacc
     }
 
     // 2023-03-29 15:05:20 ページメニュー項目の設定
-    public function pemenu()
+    public function pemenu($menuG)
     {
         try {
             if ($_SESSION['permissions'] == 'LoginOK') {
-                $temp = array("killl" => 1);
-                $sql = 'select * from partslist.menus where killl =:killl order by morder';
+                $temp = array("killl" => 1, "menugroup" => $menuG);
+                // $temp = array("killl" => 1, "menugroup" => 1);
+                $sql = 'select * from partslist.menus where killl =:killl and menugroup >:menugroup order by menuorder';
                 $this->accsee();
                 $pr = $this->dbh->prepare($sql);
                 $pr->execute($temp);

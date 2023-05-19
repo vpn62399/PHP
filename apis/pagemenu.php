@@ -9,4 +9,4 @@ class pagemenu extends mainacc
 }
 
 $menu = new pagemenu();
-$menu->pemenu();
+$menu->pemenu($_GET['menugropu']);
